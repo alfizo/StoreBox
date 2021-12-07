@@ -1,0 +1,2 @@
+class ReceivingProductCreateInput {}
+export { ReceivingProductCreateInput };

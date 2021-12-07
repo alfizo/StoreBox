@@ -1,0 +1,19 @@
+{
+  "dataServiceGeneratorVersion": "0.10.2",
+  "appInfo": {
+    "name": "StoreBox",
+    "description": "Sample application for e-commerce",
+    "version": "2b4hd8bw",
+    "id": "ckwvy5ora5131881bs69dpx6bbr",
+    "url": "https://app.amplication.com/ckwvy5ora5131881bs69dpx6bbr",
+    "settings": {
+      "dbHost": "localhost",
+      "dbName": "",
+      "dbPassword": "admin",
+      "dbPort": 5432,
+      "dbUser": "admin",
+      "appId": "ckwvy5ora5131881bs69dpx6bbr",
+      "authProvider": "Jwt"
+    }
+  }
+}
