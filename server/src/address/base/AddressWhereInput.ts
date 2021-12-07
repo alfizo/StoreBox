@@ -60,6 +60,17 @@ class AddressWhereInput {
   @Field(() => StringNullableFilter, {
     nullable: true,
   })
+  postalCode?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
   state?: StringNullableFilter;
 
   @ApiProperty({

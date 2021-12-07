@@ -1,4 +1,5 @@
 import { Address } from "../address/Address";
+import { Product } from "../product/Product";
 
 export type Supplier = {
   account: string | null;
@@ -9,5 +10,6 @@ export type Supplier = {
   email: string | null;
   id: string;
   name: string | null;
+  products?: Array<Product>;
   updatedAt: Date;
 };
