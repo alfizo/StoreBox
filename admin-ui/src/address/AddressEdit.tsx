@@ -14,6 +14,7 @@ export const AddressEdit = (props: EditProps): React.ReactElement => {
         <TextInput label="Address 1" source="address_1" />
         <TextInput label="Address 2" source="address_2" />
         <TextInput label="City" source="city" />
+        <TextInput label="postalCode" source="postalCode" />
         <TextInput label="State" source="state" />
         <NumberInput step={1} label="Zip" source="zip" />
       </SimpleForm>

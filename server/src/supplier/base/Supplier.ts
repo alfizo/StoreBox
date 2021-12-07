@@ -3,6 +3,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsString, IsOptional, ValidateNested, IsDate } from "class-validator";
 import { Address } from "../../address/base/Address";
 import { Type } from "class-transformer";
+import { Product } from "../../product/base/Product";
 @ObjectType()
 class Supplier {
   @ApiProperty({
@@ -84,6 +85,15 @@ class Supplier {
     nullable: true,
   })
   name!: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => [Product],
+  })
+  @ValidateNested()
+  @Type(() => Product)
+  @IsOptional()
+  products?: Array<Product>;
 
   @ApiProperty({
     required: true,

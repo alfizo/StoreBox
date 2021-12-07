@@ -59,6 +59,15 @@ class AddressOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
+  postalCode?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["Asc", "Desc"],
+  })
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
   state?: SortOrder;
 
   @ApiProperty({

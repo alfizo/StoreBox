@@ -46,26 +46,36 @@ model Customer {
 }
 
 model Address {
-  address_1 String?
-  address_2 String?
-  city      String?
-  createdAt DateTime   @default(now())
-  customers Customer[]
-  id        String     @id @default(cuid())
-  state     String?
-  suppliers Supplier[]
-  updatedAt DateTime   @updatedAt
-  zip       Int?
+  address_1  String?
+  address_2  String?
+  city       String?
+  createdAt  DateTime   @default(now())
+  customers  Customer[]
+  id         String     @id @default(cuid())
+  postalCode String?
+  state      String?
+  suppliers  Supplier[]
+  updatedAt  DateTime   @updatedAt
+  zip        Int?
 }
 
 model Product {
+  availableStock    Int?
+  brand             String?
+  category          Category[]
+  costPrice         Float?
   createdAt         DateTime           @default(now())
   description       String?
   id                String             @id @default(cuid())
+  image             Json?
+  itemCode          String?
   itemPrice         Float?
   name              String?
   orders            Order[]
   receivingProducts ReceivingProduct[]
+  reorderLevel      Int?
+  size              String?
+  supplier          Supplier[]
   updatedAt         DateTime           @updatedAt
 }
 
@@ -104,21 +114,23 @@ model File {
 }
 
 model Category {
-  createdAt DateTime @default(now())
-  id        String   @id @default(cuid())
+  createdAt DateTime  @default(now())
+  id        String    @id @default(cuid())
   name      String?
-  updatedAt DateTime @updatedAt
+  products  Product[]
+  updatedAt DateTime  @updatedAt
 }
 
 model Supplier {
   account             String?
-  address             Address? @relation(fields: [addressId], references: [id])
+  address             Address?  @relation(fields: [addressId], references: [id])
   addressId           String?
   companyRegistration String?
   contactNumber       String?
-  createdAt           DateTime @default(now())
+  createdAt           DateTime  @default(now())
   email               String?
-  id                  String   @id @default(cuid())
+  id                  String    @id @default(cuid())
   name                String?
-  updatedAt           DateTime @updatedAt
+  products            Product[]
+  updatedAt           DateTime  @updatedAt
 }
