@@ -1,5 +1,5 @@
 import { PrismaService } from "nestjs-prisma";
-import { Prisma, Product, Order } from "@prisma/client";
+import { Prisma, Product, Order, ReceivingProduct } from "@prisma/client";
 
 export class ProductServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -45,5 +45,16 @@ export class ProductServiceBase {
         where: { id: parentId },
       })
       .orders(args);
+  }
+
+  async findReceivingProducts(
+    parentId: string,
+    args: Prisma.ReceivingProductFindManyArgs
+  ): Promise<ReceivingProduct[]> {
+    return this.prisma.product
+      .findUnique({
+        where: { id: parentId },
+      })
+      .receivingProducts(args);
   }
 }

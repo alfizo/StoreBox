@@ -33,6 +33,18 @@ import { ReceivingProductList } from "./receivingProduct/ReceivingProductList";
 import { ReceivingProductCreate } from "./receivingProduct/ReceivingProductCreate";
 import { ReceivingProductEdit } from "./receivingProduct/ReceivingProductEdit";
 import { ReceivingProductShow } from "./receivingProduct/ReceivingProductShow";
+import { FileList } from "./file/FileList";
+import { FileCreate } from "./file/FileCreate";
+import { FileEdit } from "./file/FileEdit";
+import { FileShow } from "./file/FileShow";
+import { CategoryList } from "./category/CategoryList";
+import { CategoryCreate } from "./category/CategoryCreate";
+import { CategoryEdit } from "./category/CategoryEdit";
+import { CategoryShow } from "./category/CategoryShow";
+import { SupplierList } from "./supplier/SupplierList";
+import { SupplierCreate } from "./supplier/SupplierCreate";
+import { SupplierEdit } from "./supplier/SupplierEdit";
+import { SupplierShow } from "./supplier/SupplierShow";
 import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
 
 const App = (): React.ReactElement => {
@@ -107,6 +119,27 @@ const App = (): React.ReactElement => {
           edit={ReceivingProductEdit}
           create={ReceivingProductCreate}
           show={ReceivingProductShow}
+        />
+        <Resource
+          name="File"
+          list={FileList}
+          edit={FileEdit}
+          create={FileCreate}
+          show={FileShow}
+        />
+        <Resource
+          name="Category"
+          list={CategoryList}
+          edit={CategoryEdit}
+          create={CategoryCreate}
+          show={CategoryShow}
+        />
+        <Resource
+          name="Supplier"
+          list={SupplierList}
+          edit={SupplierEdit}
+          create={SupplierCreate}
+          show={SupplierShow}
         />
       </Admin>
     </div>

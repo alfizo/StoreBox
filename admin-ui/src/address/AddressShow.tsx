@@ -47,6 +47,32 @@ export const AddressShow = (props: ShowProps): React.ReactElement => {
             <DateField source="updatedAt" label="Updated At" />
           </Datagrid>
         </ReferenceManyField>
+        <ReferenceManyField
+          reference="Supplier"
+          target="AddressId"
+          label="Suppliers"
+        >
+          <Datagrid rowClick="show">
+            <TextField label="account" source="account" />
+            <ReferenceField
+              label="Address"
+              source="address.id"
+              reference="Address"
+            >
+              <TextField source={ADDRESS_TITLE_FIELD} />
+            </ReferenceField>
+            <TextField
+              label="companyRegistration"
+              source="companyRegistration"
+            />
+            <TextField label="contactNumber" source="contactNumber" />
+            <DateField source="createdAt" label="Created At" />
+            <TextField label="email" source="email" />
+            <TextField label="ID" source="id" />
+            <TextField label="name" source="name" />
+            <DateField source="updatedAt" label="Updated At" />
+          </Datagrid>
+        </ReferenceManyField>
       </SimpleShowLayout>
     </Show>
   );

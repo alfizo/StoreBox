@@ -14,6 +14,8 @@ import { DeleteReceivingArgs } from "./DeleteReceivingArgs";
 import { ReceivingFindManyArgs } from "./ReceivingFindManyArgs";
 import { ReceivingFindUniqueArgs } from "./ReceivingFindUniqueArgs";
 import { Receiving } from "./Receiving";
+import { FileFindManyArgs } from "../../file/base/FileFindManyArgs";
+import { File } from "../../file/base/File";
 import { User } from "../../user/base/User";
 import { ReceivingService } from "../receiving.service";
 
@@ -208,6 +210,32 @@ export class ReceivingResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.ResolveField(() => [File])
+  @nestAccessControl.UseRoles({
+    resource: "Receiving",
+    action: "read",
+    possession: "any",
+  })
+  async files(
+    @graphql.Parent() parent: Receiving,
+    @graphql.Args() args: FileFindManyArgs,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<File[]> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "File",
+    });
+    const results = await this.service.findFiles(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results.map((result) => permission.filter(result));
   }
 
   @graphql.ResolveField(() => User, { nullable: true })

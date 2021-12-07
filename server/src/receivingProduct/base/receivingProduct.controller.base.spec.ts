@@ -12,24 +12,36 @@ const nonExistingId = "nonExistingId";
 const existingId = "existingId";
 const CREATE_INPUT = {
   createdAt: new Date(),
+  dateReceived: new Date(),
+  description: "exampleDescription",
   id: "exampleId",
+  quantity: 42,
   updatedAt: new Date(),
 };
 const CREATE_RESULT = {
   createdAt: new Date(),
+  dateReceived: new Date(),
+  description: "exampleDescription",
   id: "exampleId",
+  quantity: 42,
   updatedAt: new Date(),
 };
 const FIND_MANY_RESULT = [
   {
     createdAt: new Date(),
+    dateReceived: new Date(),
+    description: "exampleDescription",
     id: "exampleId",
+    quantity: 42,
     updatedAt: new Date(),
   },
 ];
 const FIND_ONE_RESULT = {
   createdAt: new Date(),
+  dateReceived: new Date(),
+  description: "exampleDescription",
   id: "exampleId",
+  quantity: 42,
   updatedAt: new Date(),
 };
 
@@ -97,6 +109,7 @@ describe("ReceivingProduct", () => {
       .expect({
         ...CREATE_RESULT,
         createdAt: CREATE_RESULT.createdAt.toISOString(),
+        dateReceived: CREATE_RESULT.dateReceived.toISOString(),
         updatedAt: CREATE_RESULT.updatedAt.toISOString(),
       });
   });
@@ -109,6 +122,7 @@ describe("ReceivingProduct", () => {
         {
           ...FIND_MANY_RESULT[0],
           createdAt: FIND_MANY_RESULT[0].createdAt.toISOString(),
+          dateReceived: FIND_MANY_RESULT[0].dateReceived.toISOString(),
           updatedAt: FIND_MANY_RESULT[0].updatedAt.toISOString(),
         },
       ]);
@@ -132,6 +146,7 @@ describe("ReceivingProduct", () => {
       .expect({
         ...FIND_ONE_RESULT,
         createdAt: FIND_ONE_RESULT.createdAt.toISOString(),
+        dateReceived: FIND_ONE_RESULT.dateReceived.toISOString(),
         updatedAt: FIND_ONE_RESULT.updatedAt.toISOString(),
       });
   });

@@ -53,24 +53,27 @@ model Address {
   customers Customer[]
   id        String     @id @default(cuid())
   state     String?
+  suppliers Supplier[]
   updatedAt DateTime   @updatedAt
   zip       Int?
 }
 
 model Product {
-  createdAt   DateTime @default(now())
-  description String?
-  id          String   @id @default(cuid())
-  itemPrice   Float?
-  name        String?
-  orders      Order[]
-  updatedAt   DateTime @updatedAt
+  createdAt         DateTime           @default(now())
+  description       String?
+  id                String             @id @default(cuid())
+  itemPrice         Float?
+  name              String?
+  orders            Order[]
+  receivingProducts ReceivingProduct[]
+  updatedAt         DateTime           @updatedAt
 }
 
 model Receiving {
   createdAt    DateTime  @default(now())
   dateReceived DateTime?
   description  String?
+  files        File[]
   id           String    @id @default(cuid())
   orderNumber  String?
   updatedAt    DateTime  @updatedAt
@@ -79,7 +82,43 @@ model Receiving {
 }
 
 model ReceivingProduct {
+  createdAt    DateTime  @default(now())
+  dateReceived DateTime?
+  description  String?
+  id           String    @id @default(cuid())
+  product      Product?  @relation(fields: [productId], references: [id])
+  productId    String?
+  quantity     Int?
+  updatedAt    DateTime  @updatedAt
+}
+
+model File {
+  cloudinaryUrl String?
+  createdAt     DateTime   @default(now())
+  id            String     @id @default(cuid())
+  name          String?
+  receiving     Receiving? @relation(fields: [receivingId], references: [id])
+  receivingId   String?
+  sytemName     String?
+  updatedAt     DateTime   @updatedAt
+}
+
+model Category {
   createdAt DateTime @default(now())
   id        String   @id @default(cuid())
+  name      String?
   updatedAt DateTime @updatedAt
+}
+
+model Supplier {
+  account             String?
+  address             Address? @relation(fields: [addressId], references: [id])
+  addressId           String?
+  companyRegistration String?
+  contactNumber       String?
+  createdAt           DateTime @default(now())
+  email               String?
+  id                  String   @id @default(cuid())
+  name                String?
+  updatedAt           DateTime @updatedAt
 }

@@ -16,6 +16,8 @@ import { ProductFindUniqueArgs } from "./ProductFindUniqueArgs";
 import { Product } from "./Product";
 import { OrderFindManyArgs } from "../../order/base/OrderFindManyArgs";
 import { Order } from "../../order/base/Order";
+import { ReceivingProductFindManyArgs } from "../../receivingProduct/base/ReceivingProductFindManyArgs";
+import { ReceivingProduct } from "../../receivingProduct/base/ReceivingProduct";
 import { ProductService } from "../product.service";
 
 @graphql.Resolver(() => Product)
@@ -213,6 +215,32 @@ export class ProductResolverBase {
       resource: "Order",
     });
     const results = await this.service.findOrders(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results.map((result) => permission.filter(result));
+  }
+
+  @graphql.ResolveField(() => [ReceivingProduct])
+  @nestAccessControl.UseRoles({
+    resource: "Product",
+    action: "read",
+    possession: "any",
+  })
+  async receivingProducts(
+    @graphql.Parent() parent: Product,
+    @graphql.Args() args: ReceivingProductFindManyArgs,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<ReceivingProduct[]> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "ReceivingProduct",
+    });
+    const results = await this.service.findReceivingProducts(parent.id, args);
 
     if (!results) {
       return [];
