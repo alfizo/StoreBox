@@ -9,6 +9,7 @@ import {
 } from "class-validator";
 import { Type } from "class-transformer";
 import { Product } from "../../product/base/Product";
+import { Supplier } from "../../supplier/base/Supplier";
 @ObjectType()
 class ReceivingProduct {
   @ApiProperty({
@@ -68,6 +69,15 @@ class ReceivingProduct {
     nullable: true,
   })
   quantity!: number | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => [Supplier],
+  })
+  @ValidateNested()
+  @Type(() => Supplier)
+  @IsOptional()
+  supplier?: Array<Supplier>;
 
   @ApiProperty({
     required: true,

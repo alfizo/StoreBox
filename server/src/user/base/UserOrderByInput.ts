@@ -14,7 +14,25 @@ class UserOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
+  contactNumber?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["Asc", "Desc"],
+  })
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
   createdAt?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["Asc", "Desc"],
+  })
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
+  email?: SortOrder;
 
   @ApiProperty({
     required: false,

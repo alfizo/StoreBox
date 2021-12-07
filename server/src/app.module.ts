@@ -9,9 +9,9 @@ import { ReceivingProductModule } from "./receivingProduct/receivingProduct.modu
 import { FileModule } from "./file/file.module";
 import { CategoryModule } from "./category/category.module";
 import { SupplierModule } from "./supplier/supplier.module";
+import { HealthModule } from "./health/health.module";
 import { ACLModule } from "./auth/acl.module";
 import { AuthModule } from "./auth/auth.module";
-import { HealthModule } from "./health/health.module";
 import { SecretsManagerModule } from "./providers/secrets/secretsManager.module";
 import { MorganModule } from "nest-morgan";
 import { ConfigModule, ConfigService } from "@nestjs/config";
@@ -32,9 +32,9 @@ import { GraphQLModule } from "@nestjs/graphql";
     FileModule,
     CategoryModule,
     SupplierModule,
+    HealthModule,
     ACLModule,
     AuthModule,
-    HealthModule,
     SecretsManagerModule,
     MorganModule,
     ConfigModule.forRoot({ isGlobal: true }),

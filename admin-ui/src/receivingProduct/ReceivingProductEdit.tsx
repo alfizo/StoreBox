@@ -17,8 +17,8 @@ export const ReceivingProductEdit = (props: EditProps): React.ReactElement => {
   return (
     <Edit {...props}>
       <SimpleForm>
-        <DateTimeInput label="dateReceived" source="dateReceived" />
-        <TextInput label="description" multiline source="description" />
+        <DateTimeInput label="DateReceived" source="dateReceived" />
+        <TextInput label="Description" multiline source="description" />
         <ReferenceInput source="product.id" reference="Product" label="product">
           <SelectInput optionText={ProductTitle} />
         </ReferenceInput>

@@ -14,6 +14,8 @@ import { DeleteCategoryArgs } from "./DeleteCategoryArgs";
 import { CategoryFindManyArgs } from "./CategoryFindManyArgs";
 import { CategoryFindUniqueArgs } from "./CategoryFindUniqueArgs";
 import { Category } from "./Category";
+import { ProductFindManyArgs } from "../../product/base/ProductFindManyArgs";
+import { Product } from "../../product/base/Product";
 import { CategoryService } from "../category.service";
 
 @graphql.Resolver(() => Category)
@@ -191,5 +193,31 @@ export class CategoryResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.ResolveField(() => [Product])
+  @nestAccessControl.UseRoles({
+    resource: "Category",
+    action: "read",
+    possession: "any",
+  })
+  async products(
+    @graphql.Parent() parent: Category,
+    @graphql.Args() args: ProductFindManyArgs,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<Product[]> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "Product",
+    });
+    const results = await this.service.findProducts(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results.map((result) => permission.filter(result));
   }
 }

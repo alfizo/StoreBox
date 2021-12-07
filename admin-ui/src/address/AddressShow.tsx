@@ -22,6 +22,7 @@ export const AddressShow = (props: ShowProps): React.ReactElement => {
         <TextField label="City" source="city" />
         <DateField source="createdAt" label="Created At" />
         <TextField label="ID" source="id" />
+        <TextField label="postalCode" source="postalCode" />
         <TextField label="State" source="state" />
         <DateField source="updatedAt" label="Updated At" />
         <TextField label="Zip" source="zip" />

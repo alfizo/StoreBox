@@ -14,10 +14,14 @@ import { DeleteProductArgs } from "./DeleteProductArgs";
 import { ProductFindManyArgs } from "./ProductFindManyArgs";
 import { ProductFindUniqueArgs } from "./ProductFindUniqueArgs";
 import { Product } from "./Product";
+import { CategoryFindManyArgs } from "../../category/base/CategoryFindManyArgs";
+import { Category } from "../../category/base/Category";
 import { OrderFindManyArgs } from "../../order/base/OrderFindManyArgs";
 import { Order } from "../../order/base/Order";
 import { ReceivingProductFindManyArgs } from "../../receivingProduct/base/ReceivingProductFindManyArgs";
 import { ReceivingProduct } from "../../receivingProduct/base/ReceivingProduct";
+import { SupplierFindManyArgs } from "../../supplier/base/SupplierFindManyArgs";
+import { Supplier } from "../../supplier/base/Supplier";
 import { ProductService } from "../product.service";
 
 @graphql.Resolver(() => Product)
@@ -197,6 +201,32 @@ export class ProductResolverBase {
     }
   }
 
+  @graphql.ResolveField(() => [Category])
+  @nestAccessControl.UseRoles({
+    resource: "Product",
+    action: "read",
+    possession: "any",
+  })
+  async category(
+    @graphql.Parent() parent: Product,
+    @graphql.Args() args: CategoryFindManyArgs,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<Category[]> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "Category",
+    });
+    const results = await this.service.findCategory(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results.map((result) => permission.filter(result));
+  }
+
   @graphql.ResolveField(() => [Order])
   @nestAccessControl.UseRoles({
     resource: "Product",
@@ -241,6 +271,32 @@ export class ProductResolverBase {
       resource: "ReceivingProduct",
     });
     const results = await this.service.findReceivingProducts(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results.map((result) => permission.filter(result));
+  }
+
+  @graphql.ResolveField(() => [Supplier])
+  @nestAccessControl.UseRoles({
+    resource: "Product",
+    action: "read",
+    possession: "any",
+  })
+  async supplier(
+    @graphql.Parent() parent: Product,
+    @graphql.Args() args: SupplierFindManyArgs,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<Supplier[]> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "Supplier",
+    });
+    const results = await this.service.findSupplier(parent.id, args);
 
     if (!results) {
       return [];

@@ -11,37 +11,61 @@ import { ProductService } from "../product.service";
 const nonExistingId = "nonExistingId";
 const existingId = "existingId";
 const CREATE_INPUT = {
+  availableStock: 42,
+  brand: "exampleBrand",
+  costPrice: 42.42,
   createdAt: new Date(),
   description: "exampleDescription",
   id: "exampleId",
+  itemCode: "exampleItemCode",
   itemPrice: 42.42,
   name: "exampleName",
+  reorderLevel: 42,
+  size: "exampleSize",
   updatedAt: new Date(),
 };
 const CREATE_RESULT = {
+  availableStock: 42,
+  brand: "exampleBrand",
+  costPrice: 42.42,
   createdAt: new Date(),
   description: "exampleDescription",
   id: "exampleId",
+  itemCode: "exampleItemCode",
   itemPrice: 42.42,
   name: "exampleName",
+  reorderLevel: 42,
+  size: "exampleSize",
   updatedAt: new Date(),
 };
 const FIND_MANY_RESULT = [
   {
+    availableStock: 42,
+    brand: "exampleBrand",
+    costPrice: 42.42,
     createdAt: new Date(),
     description: "exampleDescription",
     id: "exampleId",
+    itemCode: "exampleItemCode",
     itemPrice: 42.42,
     name: "exampleName",
+    reorderLevel: 42,
+    size: "exampleSize",
     updatedAt: new Date(),
   },
 ];
 const FIND_ONE_RESULT = {
+  availableStock: 42,
+  brand: "exampleBrand",
+  costPrice: 42.42,
   createdAt: new Date(),
   description: "exampleDescription",
   id: "exampleId",
+  itemCode: "exampleItemCode",
   itemPrice: 42.42,
   name: "exampleName",
+  reorderLevel: 42,
+  size: "exampleSize",
   updatedAt: new Date(),
 };
 
