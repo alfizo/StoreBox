@@ -1,0 +1,2 @@
+class ReceivingProductUpdateInput {}
+export { ReceivingProductUpdateInput };
