@@ -15,6 +15,8 @@ import { ReceivingWhereUniqueInput } from "./ReceivingWhereUniqueInput";
 import { ReceivingFindManyArgs } from "./ReceivingFindManyArgs";
 import { ReceivingUpdateInput } from "./ReceivingUpdateInput";
 import { Receiving } from "./Receiving";
+import { FileWhereInput } from "../../file/base/FileWhereInput";
+import { File } from "../../file/base/File";
 @swagger.ApiBearerAuth()
 export class ReceivingControllerBase {
   constructor(
@@ -301,5 +303,189 @@ export class ReceivingControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Get("/:id/files")
+  @nestAccessControl.UseRoles({
+    resource: "Receiving",
+    action: "read",
+    possession: "any",
+  })
+  @swagger.ApiQuery({
+    type: () => FileWhereInput,
+    style: "deepObject",
+    explode: true,
+  })
+  async findManyFiles(
+    @common.Req() request: Request,
+    @common.Param() params: ReceivingWhereUniqueInput,
+    @nestAccessControl.UserRoles() userRoles: string[]
+  ): Promise<File[]> {
+    const query: FileWhereInput = request.query;
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "File",
+    });
+    const results = await this.service.findFiles(params.id, {
+      where: query,
+      select: {
+        cloudinaryUrl: true,
+        createdAt: true,
+        id: true,
+        name: true,
+
+        receiving: {
+          select: {
+            id: true,
+          },
+        },
+
+        sytemName: true,
+        updatedAt: true,
+      },
+    });
+    return results.map((result) => permission.filter(result));
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Post("/:id/files")
+  @nestAccessControl.UseRoles({
+    resource: "Receiving",
+    action: "update",
+    possession: "any",
+  })
+  async createFiles(
+    @common.Param() params: ReceivingWhereUniqueInput,
+    @common.Body() body: ReceivingWhereUniqueInput[],
+    @nestAccessControl.UserRoles() userRoles: string[]
+  ): Promise<void> {
+    const data = {
+      files: {
+        connect: body,
+      },
+    };
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "update",
+      possession: "any",
+      resource: "Receiving",
+    });
+    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
+    if (invalidAttributes.length) {
+      const roles = userRoles
+        .map((role: string) => JSON.stringify(role))
+        .join(",");
+      throw new common.ForbiddenException(
+        `Updating the relationship: ${
+          invalidAttributes[0]
+        } of ${"Receiving"} is forbidden for roles: ${roles}`
+      );
+    }
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Patch("/:id/files")
+  @nestAccessControl.UseRoles({
+    resource: "Receiving",
+    action: "update",
+    possession: "any",
+  })
+  async updateFiles(
+    @common.Param() params: ReceivingWhereUniqueInput,
+    @common.Body() body: ReceivingWhereUniqueInput[],
+    @nestAccessControl.UserRoles() userRoles: string[]
+  ): Promise<void> {
+    const data = {
+      files: {
+        set: body,
+      },
+    };
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "update",
+      possession: "any",
+      resource: "Receiving",
+    });
+    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
+    if (invalidAttributes.length) {
+      const roles = userRoles
+        .map((role: string) => JSON.stringify(role))
+        .join(",");
+      throw new common.ForbiddenException(
+        `Updating the relationship: ${
+          invalidAttributes[0]
+        } of ${"Receiving"} is forbidden for roles: ${roles}`
+      );
+    }
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Delete("/:id/files")
+  @nestAccessControl.UseRoles({
+    resource: "Receiving",
+    action: "update",
+    possession: "any",
+  })
+  async deleteFiles(
+    @common.Param() params: ReceivingWhereUniqueInput,
+    @common.Body() body: ReceivingWhereUniqueInput[],
+    @nestAccessControl.UserRoles() userRoles: string[]
+  ): Promise<void> {
+    const data = {
+      files: {
+        disconnect: body,
+      },
+    };
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "update",
+      possession: "any",
+      resource: "Receiving",
+    });
+    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
+    if (invalidAttributes.length) {
+      const roles = userRoles
+        .map((role: string) => JSON.stringify(role))
+        .join(",");
+      throw new common.ForbiddenException(
+        `Updating the relationship: ${
+          invalidAttributes[0]
+        } of ${"Receiving"} is forbidden for roles: ${roles}`
+      );
+    }
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
   }
 }

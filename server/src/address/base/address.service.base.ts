@@ -1,5 +1,5 @@
 import { PrismaService } from "nestjs-prisma";
-import { Prisma, Address, Customer } from "@prisma/client";
+import { Prisma, Address, Customer, Supplier } from "@prisma/client";
 
 export class AddressServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -45,5 +45,16 @@ export class AddressServiceBase {
         where: { id: parentId },
       })
       .customers(args);
+  }
+
+  async findSuppliers(
+    parentId: string,
+    args: Prisma.SupplierFindManyArgs
+  ): Promise<Supplier[]> {
+    return this.prisma.address
+      .findUnique({
+        where: { id: parentId },
+      })
+      .suppliers(args);
   }
 }

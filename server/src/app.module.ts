@@ -6,6 +6,9 @@ import { AddressModule } from "./address/address.module";
 import { ProductModule } from "./product/product.module";
 import { ReceivingModule } from "./receiving/receiving.module";
 import { ReceivingProductModule } from "./receivingProduct/receivingProduct.module";
+import { FileModule } from "./file/file.module";
+import { CategoryModule } from "./category/category.module";
+import { SupplierModule } from "./supplier/supplier.module";
 import { ACLModule } from "./auth/acl.module";
 import { AuthModule } from "./auth/auth.module";
 import { HealthModule } from "./health/health.module";
@@ -26,6 +29,9 @@ import { GraphQLModule } from "@nestjs/graphql";
     ProductModule,
     ReceivingModule,
     ReceivingProductModule,
+    FileModule,
+    CategoryModule,
+    SupplierModule,
     ACLModule,
     AuthModule,
     HealthModule,

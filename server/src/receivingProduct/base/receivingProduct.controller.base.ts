@@ -58,10 +58,28 @@ export class ReceivingProductControllerBase {
       );
     }
     return await this.service.create({
-      data: data,
+      data: {
+        ...data,
+
+        product: data.product
+          ? {
+              connect: data.product,
+            }
+          : undefined,
+      },
       select: {
         createdAt: true,
+        dateReceived: true,
+        description: true,
         id: true,
+
+        product: {
+          select: {
+            id: true,
+          },
+        },
+
+        quantity: true,
         updatedAt: true,
       },
     });
@@ -101,7 +119,17 @@ export class ReceivingProductControllerBase {
       ...args,
       select: {
         createdAt: true,
+        dateReceived: true,
+        description: true,
         id: true,
+
+        product: {
+          select: {
+            id: true,
+          },
+        },
+
+        quantity: true,
         updatedAt: true,
       },
     });
@@ -136,7 +164,17 @@ export class ReceivingProductControllerBase {
       where: params,
       select: {
         createdAt: true,
+        dateReceived: true,
+        description: true,
         id: true,
+
+        product: {
+          select: {
+            id: true,
+          },
+        },
+
+        quantity: true,
         updatedAt: true,
       },
     });
@@ -189,10 +227,28 @@ export class ReceivingProductControllerBase {
     try {
       return await this.service.update({
         where: params,
-        data: data,
+        data: {
+          ...data,
+
+          product: data.product
+            ? {
+                connect: data.product,
+              }
+            : undefined,
+        },
         select: {
           createdAt: true,
+          dateReceived: true,
+          description: true,
           id: true,
+
+          product: {
+            select: {
+              id: true,
+            },
+          },
+
+          quantity: true,
           updatedAt: true,
         },
       });
@@ -228,7 +284,17 @@ export class ReceivingProductControllerBase {
         where: params,
         select: {
           createdAt: true,
+          dateReceived: true,
+          description: true,
           id: true,
+
+          product: {
+            select: {
+              id: true,
+            },
+          },
+
+          quantity: true,
           updatedAt: true,
         },
       });

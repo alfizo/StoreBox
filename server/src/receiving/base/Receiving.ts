@@ -2,6 +2,7 @@ import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsDate, IsOptional, IsString, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
+import { File } from "../../file/base/File";
 import { User } from "../../user/base/User";
 @ObjectType()
 class Receiving {
@@ -34,6 +35,15 @@ class Receiving {
     nullable: true,
   })
   description!: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => [File],
+  })
+  @ValidateNested()
+  @Type(() => File)
+  @IsOptional()
+  files?: Array<File>;
 
   @ApiProperty({
     required: true,

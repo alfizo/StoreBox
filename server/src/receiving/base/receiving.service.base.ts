@@ -1,5 +1,5 @@
 import { PrismaService } from "nestjs-prisma";
-import { Prisma, Receiving, User } from "@prisma/client";
+import { Prisma, Receiving, File, User } from "@prisma/client";
 
 export class ReceivingServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -34,6 +34,17 @@ export class ReceivingServiceBase {
     args: Prisma.SelectSubset<T, Prisma.ReceivingDeleteArgs>
   ): Promise<Receiving> {
     return this.prisma.receiving.delete(args);
+  }
+
+  async findFiles(
+    parentId: string,
+    args: Prisma.FileFindManyArgs
+  ): Promise<File[]> {
+    return this.prisma.receiving
+      .findUnique({
+        where: { id: parentId },
+      })
+      .files(args);
   }
 
   async getUser(parentId: string): Promise<User | null> {
