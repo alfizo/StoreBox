@@ -4,8 +4,8 @@ import {
   Show,
   SimpleShowLayout,
   ShowProps,
-  DateField,
   TextField,
+  DateField,
   ReferenceManyField,
   Datagrid,
   ReferenceField,
@@ -17,7 +17,9 @@ export const UserShow = (props: ShowProps): React.ReactElement => {
   return (
     <Show {...props}>
       <SimpleShowLayout>
+        <TextField label="ContactNumber" source="contactNumber" />
         <DateField source="createdAt" label="Created At" />
+        <TextField label="Email" source="email" />
         <TextField label="First Name" source="firstName" />
         <TextField label="ID" source="id" />
         <TextField label="Last Name" source="lastName" />
@@ -31,10 +33,10 @@ export const UserShow = (props: ShowProps): React.ReactElement => {
         >
           <Datagrid rowClick="show">
             <DateField source="createdAt" label="Created At" />
-            <TextField label="dateReceived" source="dateReceived" />
-            <TextField label="description" source="description" />
+            <TextField label="DateReceived" source="dateReceived" />
+            <TextField label="Description" source="description" />
             <TextField label="ID" source="id" />
-            <TextField label="orderNumber" source="orderNumber" />
+            <TextField label="OrderNumber" source="orderNumber" />
             <DateField source="updatedAt" label="Updated At" />
             <ReferenceField label="user" source="user.id" reference="User">
               <TextField source={USER_TITLE_FIELD} />

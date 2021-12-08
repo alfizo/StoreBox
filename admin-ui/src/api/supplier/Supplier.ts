@@ -1,4 +1,6 @@
 import { Address } from "../address/Address";
+import { Product } from "../product/Product";
+import { ReceivingProduct } from "../receivingProduct/ReceivingProduct";
 
 export type Supplier = {
   account: string | null;
@@ -9,5 +11,7 @@ export type Supplier = {
   email: string | null;
   id: string;
   name: string | null;
+  products?: Array<Product>;
+  receivingProducts?: Array<ReceivingProduct>;
   updatedAt: Date;
 };

@@ -14,8 +14,8 @@ export const ReceivingProductShow = (props: ShowProps): React.ReactElement => {
     <Show {...props}>
       <SimpleShowLayout>
         <DateField source="createdAt" label="Created At" />
-        <TextField label="dateReceived" source="dateReceived" />
-        <TextField label="description" source="description" />
+        <TextField label="DateReceived" source="dateReceived" />
+        <TextField label="Description" source="description" />
         <TextField label="ID" source="id" />
         <ReferenceField label="product" source="product.id" reference="Product">
           <TextField source={PRODUCT_TITLE_FIELD} />

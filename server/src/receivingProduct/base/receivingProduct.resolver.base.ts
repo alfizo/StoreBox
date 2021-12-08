@@ -14,6 +14,8 @@ import { DeleteReceivingProductArgs } from "./DeleteReceivingProductArgs";
 import { ReceivingProductFindManyArgs } from "./ReceivingProductFindManyArgs";
 import { ReceivingProductFindUniqueArgs } from "./ReceivingProductFindUniqueArgs";
 import { ReceivingProduct } from "./ReceivingProduct";
+import { SupplierFindManyArgs } from "../../supplier/base/SupplierFindManyArgs";
+import { Supplier } from "../../supplier/base/Supplier";
 import { Product } from "../../product/base/Product";
 import { ReceivingProductService } from "../receivingProduct.service";
 
@@ -208,6 +210,32 @@ export class ReceivingProductResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.ResolveField(() => [Supplier])
+  @nestAccessControl.UseRoles({
+    resource: "ReceivingProduct",
+    action: "read",
+    possession: "any",
+  })
+  async supplier(
+    @graphql.Parent() parent: ReceivingProduct,
+    @graphql.Args() args: SupplierFindManyArgs,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<Supplier[]> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "Supplier",
+    });
+    const results = await this.service.findSupplier(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results.map((result) => permission.filter(result));
   }
 
   @graphql.ResolveField(() => Product, { nullable: true })

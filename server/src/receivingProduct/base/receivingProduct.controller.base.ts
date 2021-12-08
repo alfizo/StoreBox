@@ -15,6 +15,8 @@ import { ReceivingProductWhereUniqueInput } from "./ReceivingProductWhereUniqueI
 import { ReceivingProductFindManyArgs } from "./ReceivingProductFindManyArgs";
 import { ReceivingProductUpdateInput } from "./ReceivingProductUpdateInput";
 import { ReceivingProduct } from "./ReceivingProduct";
+import { SupplierWhereInput } from "../../supplier/base/SupplierWhereInput";
+import { Supplier } from "../../supplier/base/Supplier";
 @swagger.ApiBearerAuth()
 export class ReceivingProductControllerBase {
   constructor(
@@ -306,5 +308,191 @@ export class ReceivingProductControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Get("/:id/supplier")
+  @nestAccessControl.UseRoles({
+    resource: "ReceivingProduct",
+    action: "read",
+    possession: "any",
+  })
+  @swagger.ApiQuery({
+    type: () => SupplierWhereInput,
+    style: "deepObject",
+    explode: true,
+  })
+  async findManySupplier(
+    @common.Req() request: Request,
+    @common.Param() params: ReceivingProductWhereUniqueInput,
+    @nestAccessControl.UserRoles() userRoles: string[]
+  ): Promise<Supplier[]> {
+    const query: SupplierWhereInput = request.query;
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "Supplier",
+    });
+    const results = await this.service.findSupplier(params.id, {
+      where: query,
+      select: {
+        account: true,
+
+        address: {
+          select: {
+            id: true,
+          },
+        },
+
+        companyRegistration: true,
+        contactNumber: true,
+        createdAt: true,
+        email: true,
+        id: true,
+        name: true,
+        updatedAt: true,
+      },
+    });
+    return results.map((result) => permission.filter(result));
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Post("/:id/supplier")
+  @nestAccessControl.UseRoles({
+    resource: "ReceivingProduct",
+    action: "update",
+    possession: "any",
+  })
+  async createSupplier(
+    @common.Param() params: ReceivingProductWhereUniqueInput,
+    @common.Body() body: ReceivingProductWhereUniqueInput[],
+    @nestAccessControl.UserRoles() userRoles: string[]
+  ): Promise<void> {
+    const data = {
+      supplier: {
+        connect: body,
+      },
+    };
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "update",
+      possession: "any",
+      resource: "ReceivingProduct",
+    });
+    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
+    if (invalidAttributes.length) {
+      const roles = userRoles
+        .map((role: string) => JSON.stringify(role))
+        .join(",");
+      throw new common.ForbiddenException(
+        `Updating the relationship: ${
+          invalidAttributes[0]
+        } of ${"ReceivingProduct"} is forbidden for roles: ${roles}`
+      );
+    }
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Patch("/:id/supplier")
+  @nestAccessControl.UseRoles({
+    resource: "ReceivingProduct",
+    action: "update",
+    possession: "any",
+  })
+  async updateSupplier(
+    @common.Param() params: ReceivingProductWhereUniqueInput,
+    @common.Body() body: ReceivingProductWhereUniqueInput[],
+    @nestAccessControl.UserRoles() userRoles: string[]
+  ): Promise<void> {
+    const data = {
+      supplier: {
+        set: body,
+      },
+    };
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "update",
+      possession: "any",
+      resource: "ReceivingProduct",
+    });
+    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
+    if (invalidAttributes.length) {
+      const roles = userRoles
+        .map((role: string) => JSON.stringify(role))
+        .join(",");
+      throw new common.ForbiddenException(
+        `Updating the relationship: ${
+          invalidAttributes[0]
+        } of ${"ReceivingProduct"} is forbidden for roles: ${roles}`
+      );
+    }
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Delete("/:id/supplier")
+  @nestAccessControl.UseRoles({
+    resource: "ReceivingProduct",
+    action: "update",
+    possession: "any",
+  })
+  async deleteSupplier(
+    @common.Param() params: ReceivingProductWhereUniqueInput,
+    @common.Body() body: ReceivingProductWhereUniqueInput[],
+    @nestAccessControl.UserRoles() userRoles: string[]
+  ): Promise<void> {
+    const data = {
+      supplier: {
+        disconnect: body,
+      },
+    };
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "update",
+      possession: "any",
+      resource: "ReceivingProduct",
+    });
+    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
+    if (invalidAttributes.length) {
+      const roles = userRoles
+        .map((role: string) => JSON.stringify(role))
+        .join(",");
+      throw new common.ForbiddenException(
+        `Updating the relationship: ${
+          invalidAttributes[0]
+        } of ${"ReceivingProduct"} is forbidden for roles: ${roles}`
+      );
+    }
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
   }
 }

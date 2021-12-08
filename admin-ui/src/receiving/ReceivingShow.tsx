@@ -19,10 +19,10 @@ export const ReceivingShow = (props: ShowProps): React.ReactElement => {
     <Show {...props}>
       <SimpleShowLayout>
         <DateField source="createdAt" label="Created At" />
-        <TextField label="dateReceived" source="dateReceived" />
-        <TextField label="description" source="description" />
+        <TextField label="DateReceived" source="dateReceived" />
+        <TextField label="Description" source="description" />
         <TextField label="ID" source="id" />
-        <TextField label="orderNumber" source="orderNumber" />
+        <TextField label="OrderNumber" source="orderNumber" />
         <DateField source="updatedAt" label="Updated At" />
         <ReferenceField label="user" source="user.id" reference="User">
           <TextField source={USER_TITLE_FIELD} />

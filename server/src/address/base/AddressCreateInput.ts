@@ -45,6 +45,17 @@ class AddressCreateInput {
   @Field(() => String, {
     nullable: true,
   })
+  postalCode?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
   state?: string | null;
 
   @ApiProperty({

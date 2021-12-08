@@ -16,9 +16,9 @@ export const ReceivingCreate = (props: CreateProps): React.ReactElement => {
   return (
     <Create {...props}>
       <SimpleForm>
-        <DateTimeInput label="dateReceived" source="dateReceived" />
-        <TextInput label="description" multiline source="description" />
-        <TextInput label="orderNumber" source="orderNumber" />
+        <DateTimeInput label="DateReceived" source="dateReceived" />
+        <TextInput label="Description" multiline source="description" />
+        <TextInput label="OrderNumber" source="orderNumber" />
         <ReferenceInput source="user.id" reference="User" label="user">
           <SelectInput optionText={UserTitle} />
         </ReferenceInput>

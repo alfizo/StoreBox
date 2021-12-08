@@ -8,6 +8,7 @@ export type Address = {
   createdAt: Date;
   customers?: Array<Customer>;
   id: string;
+  postalCode: string | null;
   state: string | null;
   suppliers?: Array<Supplier>;
   updatedAt: Date;
